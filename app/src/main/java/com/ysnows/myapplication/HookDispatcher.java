@@ -19,20 +19,36 @@ public class HookDispatcher implements IHookerDispatcher {
     @Override
     public void dispatch(XC_LoadPackage.LoadPackageParam lpparam) {
 
-        if (!lpparam.packageName.equals("com.ruanmei.ithome")) {
+        if (!lpparam.packageName.equals("com.tencent.mm")) {
             return;
         }
 
-        XposedBridge.log(" in systemUI " + lpparam.packageName);
+        XposedBridge.log(" in systemUI " + lpparam.packageName + "---" + lpparam.processName);
 
-        XposedHelpers.findAndHookMethod("com.ruanmei.ithome.ui.MainActivity", lpparam.classLoader, "initThings", Bundle.class, new XC_MethodHook() {
+
+        XposedHelpers.findAndHookMethod("com.tencent.mm.ui.LauncherUI", lpparam.classLoader, "onResume", new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                super.beforeHookedMethod(param);
+
+            }
+
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 super.afterHookedMethod(param);
-//                XposedBridge.log("we are in systemUI " + param.toString());
-//
-                Toast.makeText((Context) param.thisObject, "你在看什么", Toast.LENGTH_SHORT).show();
+                Toast.makeText((Context) param.thisObject, "Hello World", Toast.LENGTH_SHORT).show();
+
             }
         });
+
+//        XposedHelpers.findAndHookMethod("com.tencent.ithome.ui.MainActivity", lpparam.classLoader, "initThings", Bundle.class, new XC_MethodHook() {
+//            @Override
+//            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+//                super.afterHookedMethod(param);
+////                XposedBridge.log("we are in systemUI " + param.toString());
+////
+//                Toast.makeText((Context) param.thisObject, "你在看什么", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 }

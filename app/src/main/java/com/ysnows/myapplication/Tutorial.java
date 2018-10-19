@@ -10,5 +10,7 @@ public class Tutorial implements IXposedHookLoadPackage {
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         HotXposed.hook(HookDispatcher.class, lpparam);
+
+
     }
 }
