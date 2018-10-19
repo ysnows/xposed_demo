@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.socks.library.KLog;
+
 import net.androidwing.hotxposed.IHookerDispatcher;
 
 import de.robv.android.xposed.XC_MethodHook;
@@ -16,6 +18,7 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class HookDispatcher implements IHookerDispatcher {
+    String TAG="in systemUI";
     @Override
     public void dispatch(XC_LoadPackage.LoadPackageParam lpparam) {
 
@@ -23,7 +26,7 @@ public class HookDispatcher implements IHookerDispatcher {
             return;
         }
 
-        XposedBridge.log(" in systemUI " + lpparam.packageName + "---" + lpparam.processName);
+        XposedBridge.log(TAG + lpparam.packageName + "---" + lpparam.processName);
 
 
         XposedHelpers.findAndHookMethod("com.tencent.mm.ui.LauncherUI", lpparam.classLoader, "onResume", new XC_MethodHook() {
@@ -37,6 +40,8 @@ public class HookDispatcher implements IHookerDispatcher {
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 super.afterHookedMethod(param);
                 Toast.makeText((Context) param.thisObject, "Hello World", Toast.LENGTH_SHORT).show();
+
+                KLog.d(TAG,param);
 
             }
         });
