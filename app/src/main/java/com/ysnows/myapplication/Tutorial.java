@@ -1,5 +1,7 @@
 package com.ysnows.myapplication;
 
+import android.widget.Toast;
+
 import net.androidwing.hotxposed.HotXposed;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -10,7 +12,6 @@ public class Tutorial implements IXposedHookLoadPackage {
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         HotXposed.hook(HookDispatcher.class, lpparam);
-
 
     }
 }
